@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Messages"
+        android:id="@+id/messageitem"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_message"
+
+    />
+
+    <item
+        android:title="Appler"
+        android:id="@+id/appleid"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_message"
+        />
+
+    <item
+        android:title="Appler"
+        android:id="@+id/boolss"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_message"
+        />
+
+
+
+</menu>

@@ -24,12 +24,12 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/namec"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Ayoub 2"
             android:textSize="22sp"
-            android:id="@+id/namec"
-            android:textStyle="bold"
-            android:text="Ayoub 2"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
