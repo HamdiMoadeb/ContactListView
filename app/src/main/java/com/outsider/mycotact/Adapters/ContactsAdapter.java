@@ -1,4 +1,4 @@
-package com.outsider.mycotact;
+package com.outsider.mycotact.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import Models.Contacts;
+import com.outsider.mycotact.R;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class ContactsAdapter extends ArrayAdapter<Contacts> {
 

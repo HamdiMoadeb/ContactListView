@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddMsgActivity">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:hint="Reciever"
+        android:id="@+id/recieverid"
+        android:textSize="22sp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/dateid"
+        android:hint="Date"
+        android:layout_marginTop="20dp"
+        android:textSize="22sp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:id="@+id/msgid"
+        android:hint="Message"
+        android:textSize="22sp"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:textColor="#fff"
+        android:id="@+id/btnsend"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Envoyer"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

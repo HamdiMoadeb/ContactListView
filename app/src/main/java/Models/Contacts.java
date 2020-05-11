@@ -1,4 +1,4 @@
-package com.outsider.mycotact;
+package Models;
 
 public class Contacts {
 

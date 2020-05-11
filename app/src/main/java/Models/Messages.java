@@ -1,4 +1,4 @@
-package com.outsider.mycotact;
+package Models;
 
 public class Messages {
 
@@ -16,6 +16,8 @@ public class Messages {
         this.date = date;
         this.image = image;
     }
+
+
 
     public String getName() {
         return name;

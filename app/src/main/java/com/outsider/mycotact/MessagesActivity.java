@@ -1,9 +1,20 @@
 package com.outsider.mycotact;
 
+import Models.Messages;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.outsider.mycotact.Adapters.DBAdapter;
+import com.outsider.mycotact.Adapters.MessageAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +25,7 @@ import java.util.Date;
 public class MessagesActivity extends AppCompatActivity {
 
     ListView mylistview;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +33,7 @@ public class MessagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messages);
 
         mylistview = findViewById(R.id.msgsListview);
+        fab = findViewById(R.id.fabid);
 
         // DATE
         Date c = Calendar.getInstance().getTime();
@@ -28,17 +41,52 @@ public class MessagesActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
         String formattedDate = df.format(c);
 
+        // SQLITE
+        DBAdapter db = new DBAdapter(this);
+
         ArrayList<Messages> mymsgs = new ArrayList<>();
-            mymsgs.add(new Messages("Ayoub 2", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddfff do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ", formattedDate,R.drawable.me));
-            mymsgs.add(new Messages("Ayoub 3", "Bonjour haya winek", formattedDate,R.drawable.me));
-            mymsgs.add(new Messages("Ayoub 4", "Bonjour haya winek !!", formattedDate,R.drawable.me));
-            mymsgs.add(new Messages("Ayoub 5", "Bonjour haya winek", formattedDate,R.drawable.me));
-            mymsgs.add(new Messages("Ayoub 6", "Bonjour haya winek", formattedDate,R.drawable.me));
-            mymsgs.add(new Messages("Ooredoo", "Bonjour haya winek", formattedDate,R.drawable.me));
+        mymsgs = db.getAllMsgs();
+
 
         MessageAdapter msgadapter =
                 new MessageAdapter(this, R.layout.message_item, mymsgs);
 
         mylistview.setAdapter(msgadapter);
+
+        mylistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                new AlertDialog.Builder(MessagesActivity.this)
+                        .setTitle("Confirmation")
+                        .setMessage("Are you sure to delete this msg!")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // TODO DELETE MSG
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.ic_delete_forever_black_24dp)
+                        .show();
+
+                return false;
+            }
+        });
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MessagesActivity.this, AddMsgActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
