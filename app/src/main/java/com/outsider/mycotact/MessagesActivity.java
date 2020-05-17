@@ -26,6 +26,7 @@ public class MessagesActivity extends AppCompatActivity {
 
     ListView mylistview;
     FloatingActionButton fab;
+    ArrayList<Messages> mymsgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +42,39 @@ public class MessagesActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
         String formattedDate = df.format(c);
 
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MessagesActivity.this, AddMsgActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         // SQLITE
         DBAdapter db = new DBAdapter(this);
 
-        ArrayList<Messages> mymsgs = new ArrayList<>();
+        mymsgs = new ArrayList<>();
         mymsgs = db.getAllMsgs();
 
-
-        MessageAdapter msgadapter =
-                new MessageAdapter(this, R.layout.message_item, mymsgs);
-
+        MessageAdapter msgadapter = new MessageAdapter(this, R.layout.message_item, mymsgs);
         mylistview.setAdapter(msgadapter);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         mylistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
                 new AlertDialog.Builder(MessagesActivity.this)
                         .setTitle("Confirmation")
@@ -64,6 +83,18 @@ public class MessagesActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // TODO DELETE MSG
+
+                                // DELETE FROM DATABASE
+                                DBAdapter db = new DBAdapter(MessagesActivity.this);
+                                Messages msg = mymsgs.get(position);
+                                db.deleteMsg(msg.getId());
+
+                                // DELETE FROM ARRAYLIST (FRONT)
+                                mymsgs.remove(position);
+                                MessageAdapter msgadapter =
+                                        new MessageAdapter(MessagesActivity.this, R.layout.message_item, mymsgs);
+                                mylistview.setAdapter(msgadapter);
+
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -78,15 +109,5 @@ public class MessagesActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MessagesActivity.this, AddMsgActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 }

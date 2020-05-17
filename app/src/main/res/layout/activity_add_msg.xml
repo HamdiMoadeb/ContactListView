@@ -8,12 +8,12 @@
     android:padding="16dp"
     tools:context=".AddMsgActivity">
 
-
     <EditText
         android:layout_width="match_parent"
         android:hint="Reciever"
         android:id="@+id/recieverid"
         android:textSize="22sp"
+        android:inputType="number"
         android:layout_height="wrap_content"/>
 
     <EditText
@@ -28,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:id="@+id/msgid"
+        android:inputType="textEmailAddress"
         android:hint="Message"
         android:textSize="22sp"
         android:layout_height="wrap_content"/>

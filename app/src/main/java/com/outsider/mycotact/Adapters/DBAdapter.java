@@ -1,5 +1,6 @@
 package com.outsider.mycotact.Adapters;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,20 +33,21 @@ public class DBAdapter extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
     public ArrayList<Messages> getAllMsgs(){
 
         ArrayList<Messages> messages = new ArrayList<>();
+
         SQLiteDatabase db = getReadableDatabase();
         //SQLiteDatabase db = getWritableDatabase();
 
-        String getall = "SELECT * FROM messages ";
+        String getall = "SELECT * FROM messages";
 
         Cursor cursor = db.rawQuery(getall, null);
 
         if(cursor.moveToFirst()){
             do{
-                Messages msg = new Messages(cursor.getString(2),
+                Messages msg = new Messages(cursor.getInt(0),
+                        cursor.getString(2),
                         cursor.getString(1),
                         cursor.getString(3),
                         R.drawable.me);
@@ -57,6 +59,30 @@ public class DBAdapter extends SQLiteOpenHelper {
         return messages;
 
     }
+
+    public void ajouterMsg(Messages msg){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("message", msg.getLastMsg());
+        contentValues.put("reciever", msg.getName());
+        contentValues.put("date", msg.getDate());
+
+        db.insert("messages", null, contentValues);
+
+    }
+
+    public void deleteMsg(int id){
+
+        SQLiteDatabase db = getWritableDatabase(); //INSERT UPDATE DELETE
+        db.delete("messages", " id = ?", new String[]{ String.valueOf(id) });
+
+    }
+
+
+
+
 
 
 }

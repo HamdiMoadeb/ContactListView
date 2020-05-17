@@ -1,8 +1,10 @@
 package com.outsider.mycotact;
 
+import Models.Messages;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,13 +12,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.outsider.mycotact.Adapters.DBAdapter;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AddMsgActivity extends AppCompatActivity {
 
-    EditText msg, date, reciever;
+    EditText msgEd, date, reciever;
     Button btnsend;
 
     @Override
@@ -24,7 +28,7 @@ public class AddMsgActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_msg);
 
-        msg = findViewById(R.id.msgid);
+        msgEd = findViewById(R.id.msgid);
         date = findViewById(R.id.dateid);
         reciever = findViewById(R.id.recieverid);
         btnsend = findViewById(R.id.btnsend);
@@ -39,11 +43,57 @@ public class AddMsgActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 startdialogdate();
+
                 return false;
             }
         });
 
+
+        btnsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(reciever.getText().toString().equals("")){
+                    reciever.setError("Champ obligatoire");
+
+                }else if(date.getText().toString().equals("")){
+                    date.setError("Champ obligatoire");
+
+                }else if(msgEd.getText().toString().equals("")){
+                    msgEd.setError("Champ obligatoire");
+
+                }else if(!testEmail(msgEd.getText().toString())){
+                    msgEd.setError("Email Invalid");
+
+                }else {
+                    Messages msg = new Messages();
+                    msg.setDate(date.getText().toString());
+                    msg.setLastMsg(msgEd.getText().toString());
+                    msg.setName(reciever.getText().toString());
+
+                    DBAdapter db = new DBAdapter(AddMsgActivity.this);
+                    db.ajouterMsg(msg);
+
+                    finish();
+
+                }
+
+            }
+        });
+
+
+
+
+
     }
+
+    public boolean testEmail(String email){
+        return true;
+    }
+
+
+
+
 
     public void startdialogdate(){
 

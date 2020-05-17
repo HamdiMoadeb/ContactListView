@@ -2,10 +2,19 @@ package Models;
 
 public class Messages {
 
+    private int id;
     private String name;
     private String lastMsg;
     private String date;
     private int image;
+
+    public Messages(int id, String name, String lastMsg, String date, int image) {
+        this.id = id;
+        this.name = name;
+        this.lastMsg = lastMsg;
+        this.date = date;
+        this.image = image;
+    }
 
     public Messages() {
     }
@@ -18,6 +27,13 @@ public class Messages {
     }
 
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
